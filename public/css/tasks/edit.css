@@ -1,0 +1,15 @@
+/* All css components for edit.blade.php */
+.inner-content h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.button-1 {
+    width: 150px;
+}

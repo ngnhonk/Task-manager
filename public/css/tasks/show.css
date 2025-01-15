@@ -1,0 +1,11 @@
+/* All css components for show.blade.php */
+.button-1{
+    width: 120px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.inner-content h2{
+    margin-top: 0;
+    padding-top: 0;
+}
