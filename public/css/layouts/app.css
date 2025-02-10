@@ -78,7 +78,7 @@ header .mid .search-box input {
 }
 
 header .mid .search-box input:focus {
-    background-color: whitesmoke;
+    background-color: white;
 }
 
 header .right {

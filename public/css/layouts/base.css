@@ -62,3 +62,13 @@ a {
     color: white;
     transition: 0.5s;
 }
+
+.br-yellow{
+    background-color: lightyellow;
+}
+
+.br-yellow:hover{
+    background-color: rgb(250, 250, 178);
+    color: black;
+    transition: 0.5s;
+}

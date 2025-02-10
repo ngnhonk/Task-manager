@@ -17,6 +17,12 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
+    public function showStarred()
+    {
+        $tasks = Task::all();
+        $starredTasks = Task::where($tasks['starred'] == true);
+        return view('tasks.index', compact('starredTasks'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -30,12 +36,16 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'starred' => 'nullable|boolean',
         ]);
 
-        Task::create($request->all());
+        $validatedData['starred'] = $request->has('starred' == 1) ? true : false;
+
+        Task::create($validatedData);
+
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
@@ -46,7 +56,6 @@ class TaskController extends Controller
     {
         return view('tasks.show', compact('task'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -63,10 +72,19 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'starred' => 'required',
         ]);
 
         $task->update($request->all());
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+    }
+    public function toggleStarred(Task $task)
+    {
+        $task->update([
+            'starred' => !$task->starred,
+        ]);
+
+        return response()->json(['starred' => $task->starred]);
     }
 
     /**

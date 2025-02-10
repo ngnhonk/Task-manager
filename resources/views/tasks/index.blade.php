@@ -23,20 +23,60 @@
                 <div class="main-content">
                     <h5>{{ $task->title }}</h5>
                     <p>{{ $task->content }}</p>
+                    <p>{{$task->starred?"Is Pinned":"Not Pinned yet"}}</p>
                 </div>
                 <div class="function">
-                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="button-1 br-done"><i class="fa-solid fa-check"></i></button>
-                    </form>
-                    <a href="{{ route('tasks.show', $task->id) }}" class="button-1"><i class="fa-regular fa-eye"></i></a>
-                    <a href="{{ route('tasks.edit', $task->id) }}" class="button-1"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="button-1 br-delete"><i class="fa-regular fa-trash-can"></i></button>
-                    </form>
+                    <div class="function-item">
+                        <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="button-1 br-done"><i class="fa-solid fa-check"></i></button>
+                        </form>
+                    </div>
+                    <div class="function-item">
+                        <a href="{{ route('tasks.show', $task->id) }}" class="button-1"><i class="fa-regular fa-eye"></i></a>
+                    </div>
+                    <div class="function-item">
+                        <a href="{{ route('tasks.edit', $task->id) }}" class="button-1"><i class="fa-regular fa-pen-to-square"></i></a>
+                    </div>
+                    <div class="function-item">
+                        <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="button-1 br-delete"><i class="fa-regular fa-trash-can"></i></button>
+                        </form>
+                    </div>
+                    <div class="favourite" data-task-id="{{ $task->id }}">
+                        <button class="toggle-star button-1 br-yellow {{ $task->starred ? 'starred' : 'notStarred' }}"
+                            onclick="toggleStarred({{ $task->id }}, this)">
+                            <i class="{{ $task->starred ? 'fa-solid' : 'fa-regular' }} fa-star"></i>
+                        </button>
+                    </div>
+                    <script>
+                        function toggleStarred(taskId, button) {
+                            fetch(`/tasks/${taskId}/toggle-starred`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    },
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.starred) {
+                                        button.classList.add('starred');
+                                        button.classList.remove('notStarred');
+                                        button.innerHTML = '<i class="fa-solid fa-star"></i>';
+                                    } else {
+                                        button.classList.add('notStarred');
+                                        button.classList.remove('starred');
+                                        button.innerHTML = '<i class="fa-regular fa-star"></i>';
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        }
+                    </script>
+
                 </div>
             </li>
             @endforeach

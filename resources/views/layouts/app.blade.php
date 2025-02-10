@@ -51,7 +51,7 @@
     <div class="sidebar">
         <div class="menu">
             <ul>
-                <li><a href="#"><i class="fa-solid fa-house"></i>Home</a></li>
+                <li><a href="{{ route('tasks.index') }}"><i class="fa-solid fa-house"></i>Home</a></li>
                 <li><a href="#"><i class="fa-regular fa-star"></i>Schedule</a></li>
                 <li><a href="#"><i class="fa-regular fa-calendar-days"></i>Calendar</a></li>
             </ul>

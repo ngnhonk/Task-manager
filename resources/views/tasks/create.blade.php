@@ -35,6 +35,10 @@
                 <label for="content" class="form-label">Content</label>
                 <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
             </div>
+            <div class="mb-3">
+                <input type="hidden" name="starred" value="0">
+            </div>
+
             <div class="btn-container">
                 <button type="submit" class="button-1 br-done">Save</button>
                 <a href="{{ route('tasks.index') }}" class="button-1">Back</a>
